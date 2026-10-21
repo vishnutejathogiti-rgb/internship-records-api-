@@ -1,0 +1,48 @@
+const db = require('./db');
+
+const records = [
+  {
+    title: 'Backend Developer Intern', company: 'BrightByte Labs', location: 'Hyderabad, India',
+    mode: 'hybrid', status: 'open', start_date: '2026-11-10', end_date: '2027-02-10',
+    stipend: 12000, description: 'Build and test REST APIs with a mentor.',
+    application_url: 'https://example.com/internships/backend'
+  },
+  {
+    title: 'Frontend Engineering Intern', company: 'PixelSpring', location: 'Remote',
+    mode: 'remote', status: 'open', start_date: '2026-11-01', end_date: '2027-01-31',
+    stipend: 10000, description: 'Help build accessible web interfaces.',
+    application_url: 'https://example.com/internships/frontend'
+  },
+  {
+    title: 'Data Analyst Intern', company: 'Northstar Analytics', location: 'Bengaluru, India',
+    mode: 'onsite', status: 'in_progress', start_date: '2026-09-01', end_date: '2026-12-01',
+    stipend: 15000, description: 'Prepare reports and analyze fictional business datasets.',
+    application_url: 'https://example.com/internships/analytics'
+  },
+  {
+    title: 'QA Automation Intern', company: 'TestCraft Studio', location: 'Pune, India',
+    mode: 'hybrid', status: 'completed', start_date: '2026-05-01', end_date: '2026-08-01',
+    stipend: 8000, description: 'Write test cases and learn automated testing.',
+    application_url: null
+  },
+  {
+    title: 'UI/UX Design Intern', company: 'MangoTree Digital', location: 'Remote',
+    mode: 'remote', status: 'open', start_date: '2026-12-01', end_date: null,
+    stipend: 5000, description: 'Create wireframes and review usability feedback.',
+    application_url: 'https://example.com/internships/design'
+  }
+];
+
+const insert = db.prepare(`
+  INSERT INTO internships
+    (title, company, location, mode, status, start_date, end_date, stipend, description, application_url)
+  VALUES
+    (@title, @company, @location, @mode, @status, @start_date, @end_date, @stipend, @description, @application_url)
+`);
+const seed = db.transaction(() => {
+  db.prepare('DELETE FROM internships').run();
+  for (const record of records) insert.run(record);
+});
+seed();
+console.log(`Seeded ${records.length} fictional internship records.`);
+db.close();

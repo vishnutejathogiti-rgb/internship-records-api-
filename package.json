@@ -1,0 +1,18 @@
+{
+  "name": "internship-records-api",
+  "version": "1.0.0",
+  "description": "Beginner-friendly REST API for internship records using Node.js, Express, and SQLite",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js",
+    "seed": "node src/seed.js",
+    "test": "node --test"
+  },
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "express": "^4.21.2",
+    "zod": "^3.24.2"
+  }
+}
